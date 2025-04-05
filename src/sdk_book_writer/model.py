@@ -5,7 +5,7 @@ class ChapterOutline(BaseModel):
     description: str
 
 class BookOutline(BaseModel):
-    chapters_outline: list[ChapterOutline]= Field(default_factory=[])
+    chapters: list[ChapterOutline]= Field(default_factory=[])
 
 class BookContent(BaseModel):
     chapter_title: str

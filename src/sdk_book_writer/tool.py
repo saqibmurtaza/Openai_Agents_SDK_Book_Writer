@@ -6,6 +6,7 @@ def search_tool(topic:str, aspect:str):
     """
     Perform a search based on the given topic and aspect to generate a book outline.
     """
+    print(f"🔧 search_tool invoked with: topic={topic}, aspect={aspect}")
     wiki_tool= WikipediaAPIWrapper()
      
     search_query= f"{topic} {aspect}"

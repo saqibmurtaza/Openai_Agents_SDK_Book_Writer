@@ -1,0 +1,26 @@
+[project]
+name = "sdk-book-writer"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "saqibmurtaza", email = "saqibmurtazakhan@gmai.com" }
+]
+requires-python = ">=3.12"
+dependencies = [
+    "langchain-community>=0.3.21",
+    "openai-agents>=0.0.8",
+    "wikipedia>=1.4.0",
+]
+
+[project.scripts]
+sdk-book-writer = "sdk_book_writer.book_outline:main"
+cody = "sdk_book_writer.cody_code:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build]
+# Tell hatchling where to find the source code
+sources = ["src"]

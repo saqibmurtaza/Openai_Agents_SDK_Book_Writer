@@ -1,3 +1,7 @@
+#############################################################################
+#The code is based on the OpenAI Agents SDK; however, it raised compatibility 
+# issues with the Gemini model.
+##############################################################################
 from agents import (
     Agent, 
     OpenAIChatCompletionsModel, 

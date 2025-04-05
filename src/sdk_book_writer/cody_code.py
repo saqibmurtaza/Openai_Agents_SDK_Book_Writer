@@ -132,37 +132,33 @@ generate_book_outline = Agent(
     output_type=BookOutline
 )
 
-# Replace the write_book Agent definition with this:
 write_book = Agent(
     name="Book_writer",
     instructions = """
-    You are a creative and detail-oriented book writing assistant. When generating content, please adhere to the following:
+    You are a creative and detail-oriented book writing assistant. Please generate a full chapter in Markdown-style formatting **inside a valid JSON object**.
 
-    - Generate a valid JSON object with the following structure:
+    Requirements:
+    - Return a JSON object of the form:
     {
         "chapters": [
-        {
-            "chapter_title": "Chapter Title",
-            "content": "Full chapter content goes here with all newline characters represented as \\n"
-        }
+            {
+                "chapter_title": "Chapter Title",
+                "content": "Markdown-style content here"
+            }
         ]
     }
-    
-    - DO NOT include any markdown, extra text, or comments.
-    - Ensure that the "content" field is properly escaped (i.e., all newline characters as \\n, quotes as \\").
-    - Ensure the JSON is **complete** and well-formed, with no additional characters after the final closing brace.
+    - Use Markdown-style syntax in the content field:
+        - Start with: ## Chapter Title
+        - Use headings (##, ###), lists, and paragraphs for structure
+        - Do not escape newlines with backslashes; keep them as real newlines
+    - Do NOT include any explanation, code blocks, or text outside the JSON.
 
-    Please proceed to generate a chapter on the topic of 'Front-End Frameworks and Libraries,' including detailed content and examples as specified.
     """,
     model=model,
     tools=[search_tool],
     handoffs=[generate_book_outline],
     output_type=Book
 )
-
-# Function to escape special characters for JSON compatibility
-def escape_json_string(text):
-    return text.replace("\n", "\\n").replace("\"", "\\\"")
 
 async def main():
     try:
@@ -201,20 +197,9 @@ async def main():
         book = book_result.final_output
         
         print("Book chapter written successfully")
-
-        if book.chapters:
-            for chapter in book.chapters:
-                # Ensure that content is escaped properly before processing
-                if hasattr(chapter, 'content'):
-                    chapter.content = escape_json_string(chapter.content)
             
         print("\n📝 WRITTEN CHAPTER (Processed):\n")
 
-        if book.chapters:
-            for chapter in book.chapters:
-                # Accessing content via dot notation, not by indexing
-                if hasattr(chapter, 'content'):
-                    chapter.content = escape_json_string(chapter.content)
         
         print("\n📝 WRITTEN CHAPTER (Processed):\n")
 
